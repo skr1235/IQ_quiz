@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IQ Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border: 1px solid #ccc;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .question {
+            margin: 10px 0;
+        }
+
+        .options {
+            list-style: none;
+        }
+
+        .options li {
+            margin: 5px 0;
+        }
+
+        .options input {
+            margin-right: 10px;
+        }
+
+        .button {
+            display: block;
+            width: 100px;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #0099ff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .result {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>IQ Quiz</h1>
+        <div id="quiz">
+            <div class="question">
+                Q1. Which one of the five is least like the other four?
+            </div>
+            <ul class="options">
+                <li><input type="radio" name="q1" value="A">Dog</li>
+                <li><input type="radio" name="q1" value="B">Mouse</li>
+                <li><input type="radio" name="q1" value="C">Lion</li>
+                <li><input type="radio" name="q1" value="D">Snake</li>
+                <li><input type="radio" name="q1" value="E">Elephant</li>
+            </ul>
+            <div class="question">
+                Q2. If you rearrange the letters "LNGEDNA" you have the name of a(n):
+            </div>
+            <ul class="options">
+                <li><input type="radio" name="q2" value="A">Animal</li>
+                <li><input type="radio" name="q2" value="B">Country</li>
+                <li><input type="radio" name="q2" value="C">State</li>
+                <li><input type="radio" name="q2" value="D">City</li>
+                <li><input type="radio" name="q2" value="E">Ocean</li>
+            </ul>
+            <div class="question">
+                Q3. Which number should come next in the series? 1 - 1 - 2 - 3 - 5 - 8 - 13
+            </div>
+            <ul class="options">
+                <li><input type="radio" name="q3" value="A">8</li>
+                <li><input type="radio" name="q3" value="B">13</li>
+                <li><input type="radio" name="q3" value="C">21</li>
+                <li><input type="radio" name="q3" value="D">26</li>
+                <li><input type="radio" name="q3" value="E">31</li>
+            </ul>
+            <div class="question">
+                Q4. Which one of the five choices makes the best comparison? PEACH is to HCAEP as 46251 is to:
+            </div>
+            <ul class="options">
+                <li><input type="radio" name="q4" value="A">25641</li>
+                <li><input type="radio" name="q4" value="B">26451</li>
+                <li><input type="radio" name="q4" value="C">12654</li>
+                <li><input type="radio" name="q4" value="D">51462</li>
+                <li><input type="radio" name="q4" value="E">15264</li>
+            </ul>
+            <div class="question">
+                Q5. Mary, who is sixteen years old, is four times as old as her brother. How old will Mary be when she is twice as old as her brother?
+            </div>
+            <ul class="options">
+                <li><input type="radio" name="q5" value="A">20</li>
+                <li><input type="radio" name="q5" value="B">24</li>
+                <li><input type="radio" name="q5" value="C">25</li>
+                <li><input type="radio" name="q5" value="D">26</li>
+                <li><input type="radio" name="q5" value="E">28</li>
+            </ul>
+            <button id="submit" class="button">Submit</button>
+        </div>
+        
+</body> <div id="result" class="result hidden">
+            Your IQ score is <span id="score"></span>
+        </div>
+    </div>
+    <script>
+        // Get the elements from the HTML document
+        var quiz = document.getElementById("quiz");
+        var result = document.getElementById("result");
+        var submit = document.getElementById("submit");
+        var scoreDisplay = document.getElementById("score"); // Updated variable name
+
+        // Define the correct answers for each question
+        var answers = {
+            q1: "D",
+            q2: "B",
+            q3: "C",
+            q4: "D",
+            q5: "B"
+        };
+
+        // Define a function to check the user's answers and calculate the score
+        function checkAnswers() {
+            // Get all the radio inputs from the quiz
+            var radios = quiz.getElementsByTagName("input");
+            // Initialize the score and the number of questions
+            var userScore = 0;
+            var questions = 0;
+            // Loop through the radio inputs
+            for (var i = 0; i < radios.length; i++) {
+                // If the input is checked
+                if (radios[i].checked) {
+                    // Increment the number of questions
+                    questions++;
+                    // If the input value is the same as the answer value
+                    if (radios[i].value == answers[radios[i].name]) {
+                        // Increment the score
+                        userScore++;
+                    }
+                }
+            }
+            // If the number of questions is equal to the number of questions in the quiz
+            if (questions == Object.keys(answers).length) {
+                // Return the user's score
+                return userScore;
+            } else {
+                // Otherwise, return false
+                return false;
+            }
+        }
+
+        // Define a function to show the result
+        function showResult(userScore) {
+            // Hide the quiz and show the result
+            quiz.classList.add("hidden");
+            result.classList.remove("hidden");
+            // Display the user's score
+            scoreDisplay.innerHTML = userScore;
+        }
+
+        // Add a click event listener to the submit button
+        submit.addEventListener("click", function() {
+            // Check the answers and get the user's score
+            var userScore = checkAnswers();
+            // If the user's score is not false
+            if (userScore !== false) {
+                // Show the result
+                showResult(userScore);
+            } else {
+                // Otherwise, alert the user to answer all the questions
+                alert("Please answer all the questions!");
+            }
+        });
+    </script>
+</html>
